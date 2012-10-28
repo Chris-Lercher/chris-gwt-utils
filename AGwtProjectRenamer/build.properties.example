@@ -1,12 +1,4 @@
 ###########################
-# Usually don't edit these:
-###########################
-
-oldPackageName=agwttemplatepackage
-oldModuleName=AGwtTemplate
-oldRenameToName=agwttemplate
-
-###########################
 # EDIT HERE:
 ###########################
 
@@ -23,3 +15,13 @@ newProjectName=Renamed
 newPackageName=org.example.renamed
 newModuleName=Renamed
 newRenameToName=renamed
+
+#################################################
+# If you use the template, then don't edit these:
+#################################################
+
+oldPackageName=agwttemplatepackage
+oldModuleName=AGwtTemplate
+oldRenameToName=agwttemplate
+
+entryPointSuffix=Entry

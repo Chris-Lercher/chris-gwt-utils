@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
-public class AGwtTemplate implements EntryPoint {
+public class AGwtTemplateEntry implements EntryPoint {
   private final ExampleServiceAsync exampleService = GWT.create(ExampleService.class);
 
   @Override

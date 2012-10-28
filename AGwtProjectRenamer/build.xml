@@ -3,6 +3,7 @@
 
   <property file="build.properties"/>
   
+  <property name="entryPointSuffix" value=""/>
   <property name="oldProjectDir" value="${oldProjectParentDir}/${oldProjectName}"/>
   <property name="newProjectDir" value="${newProjectParentDir}/${newProjectName}"/>
   
@@ -47,7 +48,7 @@
     
     <property name="hostHtmlFile" value="${newProjectDir}/war/${oldModuleName}.html"/>
     <property name="moduleXmlFile" value="${newProjectDir}/src/${oldPackageNameWithSlashes}/${oldModuleName}.gwt.xml"/>
-    <property name="entryPointFile" value="${newProjectDir}/src/${oldPackageNameWithSlashes}/client/${oldModuleName}.java"/>
+    <property name="entryPointFile" value="${newProjectDir}/src/${oldPackageNameWithSlashes}/client/${oldModuleName}${entryPointSuffix}.java"/>
     <property name="webXmlFile" value="${newProjectDir}/war/WEB-INF/web.xml"/>
     <property name="buildXmlFile" value="${newProjectDir}/build.xml"/>
     <property name="eclipseProjectFile" value="${newProjectDir}/.project"/>
@@ -72,8 +73,8 @@
 
     <replace file="${moduleXmlFile}" 
           encoding="UTF-8"
-          token="class='${oldPackageName}.client.${oldModuleName}'"
-          value="class='${newPackageName}.client.${newModuleName}'" />
+          token="class='${oldPackageName}.client.${oldModuleName}${entryPointSuffix}'"
+          value="class='${newPackageName}.client.${newModuleName}${entryPointSuffix}'" />
 
     <replace 
           encoding="UTF-8"
@@ -87,6 +88,13 @@
           encoding="UTF-8"
           token="import ${oldPackageName}"
           value="import ${newPackageName}">
+      <fileset refid="javaFiles"/>
+    </replace>
+
+    <replace 
+          encoding="UTF-8"
+          token="import static ${oldPackageName}"
+          value="import static ${newPackageName}">
       <fileset refid="javaFiles"/>
     </replace>
     
@@ -147,7 +155,7 @@
   	<move file="${hostHtmlFile}" tofile="${newProjectDir}/war/${newModuleName}.html"/>
   	<move file="${newProjectDir}/war/${oldModuleName}.css" tofile="${newProjectDir}/war/${newModuleName}.css"/>
   	<move file="${moduleXmlFile}" tofile="${newProjectDir}/src/${oldPackageNameWithSlashes}/${newModuleName}.gwt.xml"/>
-  	<move file="${entryPointFile}" tofile="${newProjectDir}/src/${oldPackageNameWithSlashes}/client/${newModuleName}.java"/>
+  	<move file="${entryPointFile}" tofile="${newProjectDir}/src/${oldPackageNameWithSlashes}/client/${newModuleName}${entryPointSuffix}.java"/>
     
     <!-- Rename the dirs -->
     

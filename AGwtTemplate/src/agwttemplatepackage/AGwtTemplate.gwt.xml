@@ -10,7 +10,7 @@
   <inherits name='com.google.gwt.user.User'/>
   <inherits name='com.google.gwt.user.theme.clean.Clean'/>
   
-  <entry-point class='agwttemplatepackage.client.AGwtTemplate'/>
+  <entry-point class='agwttemplatepackage.client.AGwtTemplateEntry'/>
   
   <source path='client'/>
   <source path='shared'/>
