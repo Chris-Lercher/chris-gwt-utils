@@ -1,0 +1,25 @@
+###########################
+# Usually don't edit these:
+###########################
+
+oldPackageName=agwttemplatepackage
+oldModuleName=AGwtTemplate
+oldRenameToName=agwttemplate
+
+###########################
+# EDIT HERE:
+###########################
+
+# Notes: 
+# - oldProjectName is only required for the "rename-after-copy" target (not for the "rename-inplace" target)
+# - The renameTo name is used for the "rename-to" property in the .gwt.xml file
+
+oldProjectParentDir=..
+newProjectParentDir=../..
+
+oldProjectName=AGwtTemplate
+newProjectName=Renamed
+
+newPackageName=org.example.renamed
+newModuleName=Renamed
+newRenameToName=renamed

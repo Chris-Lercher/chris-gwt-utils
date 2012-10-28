@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="AGwtProjectRenamer" default="rename-after-copy">
+
+
+<!--  <property name="oldProjectDir" location="../AGwtTemplate" />
+  <property name="oldModuleName" value="AGwtTemplate" />
+  <property name="oldPackageName" value="agwttemplatepackage" />
+  <property name="oldRenameToName" value="agwttemplate" />
+
+  
+  <property name="newProjectDir"   value="../Renamed" />
+  <property name="newModuleName"   value="Renamed" />
+  <property name="newPackageName"  value="renamed" />
+  <property name="newRenameToName" value="renamed" /> -->
+
+  <property file="build.properties"/>
+  <property name="oldProjectDir" value="${oldProjectParentDir}/${oldProjectName}"/>
+  <property name="newProjectDir" value="${newProjectParentDir}/${newProjectName}"/>
+  
+  <fileset id="javaFiles" dir="${newProjectDir}">
+  	<include name="src/**/*.java"/>
+  	<include name="test/**/*.java"/>
+  </fileset>
+  
+  <target name="copy-project">
+    <available file="${oldProjectDir}" property="oldProjectDir.present"/>
+    <available file="${newProjectDir}" property="newProjectDir.present"/>
+    
+    <fail unless="${oldProjectDir.present}" message="oldProjectDir doesn't exist"/>
+    <fail if="${newProjectDir.present}" message="newProjectDir already exists"/>
+    
+    <copy todir="${newProjectDir}" includeemptydirs="true">
+      <fileset dir="${oldProjectDir}" includes="**"/>
+    </copy>
+    
+    <delete dir="${newProjectDir}/test-classes/${oldPackageName}"></delete>
+    <delete dir="${newProjectDir}/war/WEB-INF/classes/${oldPackageName}"></delete>
+  </target>
+
+  <!-- PUBLIC -->
+  
+  <target name="rename-after-copy" description="Copies the project, then renames the module" depends="copy-project, internal-rename-module"/>
+  
+  <target name="rename-inplace" description="Renames the module inplace (overwrites!)" depends="internal-rename-module"/>
+    
+  
+  <!-- INTERNAL -->
+  
+  <target name="internal-rename-module" >
+    
+    <script language="javascript">
+	    var oldPackageName = project.getProperty("oldPackageName");
+	    project.setProperty("oldPackageNameWithSlashes", oldPackageName.replaceAll("\\.", "/"));
+      
+	    var newPackageName = project.getProperty("newPackageName");
+	    project.setProperty("newPackageNameWithSlashes", newPackageName.replaceAll("\\.", "/"));
+	</script>
+    
+    <property name="hostHtmlFile" value="${newProjectDir}/war/${oldModuleName}.html"/>
+    <property name="moduleXmlFile" value="${newProjectDir}/src/${oldPackageNameWithSlashes}/${oldModuleName}.gwt.xml"/>
+    <property name="entryPointFile" value="${newProjectDir}/src/${oldPackageNameWithSlashes}/client/${oldModuleName}.java"/>
+    <property name="webXmlFile" value="${newProjectDir}/war/WEB-INF/web.xml"/>
+    <property name="buildXmlFile" value="${newProjectDir}/build.xml"/>
+    <property name="eclipseProjectFile" value="${newProjectDir}/.project"/>
+    
+
+    <!-- Replace content -->
+    
+    <replace file="${hostHtmlFile}" 
+          encoding="UTF-8"
+          token="${oldRenameToName}/${oldRenameToName}.nocache.js"
+          value="${newRenameToName}/${newRenameToName}.nocache.js" />
+
+    <replace file="${hostHtmlFile}" 
+          encoding="UTF-8"
+          token="${oldModuleName}.css"
+          value="${newModuleName}.css" />
+
+    <replace file="${moduleXmlFile}" 
+          encoding="UTF-8"
+          token="rename-to='${oldRenameToName}'"
+          value="rename-to='${newRenameToName}'" />
+
+    <replace file="${moduleXmlFile}" 
+          encoding="UTF-8"
+          token="class='${oldPackageName}.client.${oldModuleName}'"
+          value="class='${newPackageName}.client.${newModuleName}'" />
+
+    <replace 
+          encoding="UTF-8"
+          token="package ${oldPackageName}"
+          value="package ${newPackageName}">
+      
+      <fileset refid="javaFiles"/>
+    </replace>
+
+    <replace 
+          encoding="UTF-8"
+          token="import ${oldPackageName}"
+          value="import ${newPackageName}">
+      <fileset refid="javaFiles"/>
+    </replace>
+    
+    <replace file="${entryPointFile}" 
+          encoding="UTF-8"
+          token="public class ${oldModuleName}"
+          value="public class ${newModuleName}" />
+    
+    
+    <replace file="${webXmlFile}" 
+          encoding="UTF-8"
+          token="&lt;servlet-class&gt;${oldPackageName}"
+          value="&lt;servlet-class&gt;${newPackageName}" />
+    
+    <replace file="${webXmlFile}" 
+          encoding="UTF-8"
+          token="&lt;url-pattern&gt;/${oldRenameToName}"
+          value="&lt;url-pattern&gt;/${newRenameToName}" />
+    
+    <replace file="${webXmlFile}" 
+          encoding="UTF-8"
+          token="&lt;welcome-file&gt;${oldModuleName}"
+          value="&lt;welcome-file&gt;${newModuleName}" />
+    
+    
+    <replace file="${buildXmlFile}" 
+          encoding="UTF-8"
+          token="name=&quot;${oldModuleName}&quot;"
+          value="name=&quot;${newModuleName}&quot;" />
+    
+    <replace file="${buildXmlFile}" 
+          encoding="UTF-8"
+          token="&lt;arg value=&quot;${oldPackageName}.${oldModuleName}&quot;"
+          value="&lt;arg value=&quot;${newPackageName}.${newModuleName}&quot;" />
+    
+    <replace file="${buildXmlFile}" 
+          encoding="UTF-8"
+          token="&lt;arg value=&quot;${oldModuleName}.html&quot;"
+          value="&lt;arg value=&quot;${newModuleName}.html&quot;" />
+    
+    <replace file="${buildXmlFile}" 
+          encoding="UTF-8"
+          token="destfile=&quot;${oldModuleName}.war&quot;"
+          value="destfile=&quot;${newModuleName}.war&quot;" />
+    
+    <replace file="${buildXmlFile}" 
+          encoding="UTF-8"
+          token="dir=&quot;war/${oldRenameToName}&quot;"
+          value="dir=&quot;war/${newRenameToName}&quot;" />
+    
+    
+    <available file="${eclipseProjectFile}" property="eclipseProjectFile.present"/>
+    <antcall target="internal-renameEclipseProjectFile"/>
+      
+    
+    <!-- Rename files, but not the dirs yet -->
+  
+  	<move file="${hostHtmlFile}" tofile="${newProjectDir}/war/${newModuleName}.html"/>
+  	<move file="${newProjectDir}/war/${oldModuleName}.css" tofile="${newProjectDir}/war/${newModuleName}.css"/>
+  	<move file="${moduleXmlFile}" tofile="${newProjectDir}/src/${oldPackageNameWithSlashes}/${newModuleName}.gwt.xml"/>
+  	<move file="${entryPointFile}" tofile="${newProjectDir}/src/${oldPackageNameWithSlashes}/client/${newModuleName}.java"/>
+    
+    <!-- Rename the dirs -->
+    
+  	<move file="${newProjectDir}/src/${oldPackageNameWithSlashes}" tofile="${newProjectDir}/src/${newPackageNameWithSlashes}"/>
+  	<move file="${newProjectDir}/test/${oldPackageNameWithSlashes}" tofile="${newProjectDir}/test/${newPackageNameWithSlashes}"/>
+      
+  </target>
+  
+  <target name="internal-renameEclipseProjectFile" if="eclipseProjectFile.present">
+    <replace file="${eclipseProjectFile}" 
+              encoding="UTF-8"
+              token="&lt;name&gt;${oldProjectName}&lt;/name&gt;"
+              value="&lt;name&gt;${newProjectName}&lt;/name&gt;" />
+  </target>
+
+</project>

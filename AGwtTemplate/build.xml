@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="AGwtTemplate" default="build" basedir=".">
+  <!-- Arguments to gwtc and devmode targets -->
+  <property name="gwt.args" value="" />
+
+  <!-- Configure path to GWT SDK -->
+  <property name="gwt.sdk" location="/Users/c/prog/gwt-2.5.0.rc1" />
+
+  <path id="project.class.path">
+    <pathelement location="war/WEB-INF/classes" />
+    <pathelement location="${gwt.sdk}/gwt-user.jar" />
+    <fileset dir="${gwt.sdk}" includes="gwt-dev*.jar" />
+    <!-- Add any additional non-server libs (such as JUnit) -->
+    <fileset dir="war/WEB-INF/lib" includes="**/*.jar" />
+  </path>
+
+  <target name="libs" description="Copy libs to WEB-INF/lib">
+    <mkdir dir="war/WEB-INF/lib" />
+    <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet.jar" />
+    <copy todir="war/WEB-INF/lib" file="${gwt.sdk}/gwt-servlet-deps.jar" />
+    <!-- Add any additional server libs that need to be copied -->
+  </target>
+
+  <target name="javac" depends="libs" description="Compile java source to bytecode">
+    <mkdir dir="war/WEB-INF/classes" />
+    <javac srcdir="src" includes="**" encoding="utf-8" destdir="war/WEB-INF/classes" 
+      source="1.5" target="1.5" nowarn="true" debug="true" debuglevel="lines,vars,source"
+      includeantruntime="false">
+      <classpath refid="project.class.path" />
+    </javac>
+    <copy todir="war/WEB-INF/classes">
+      <fileset dir="src" excludes="**/*.java" />
+    </copy>
+  </target>
+
+  <target name="gwtc" depends="javac" description="GWT compile to JavaScript (production mode)">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.Compiler">
+      <classpath>
+        <pathelement location="src" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+      </classpath>
+      <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
+      <jvmarg value="-Xmx256M" />
+      <arg line="-war" />
+      <arg value="war" />
+      <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+      <arg line="${gwt.args}" />
+      <arg value="agwttemplatepackage.AGwtTemplate" />
+    </java>
+  </target>
+
+  <target name="devmode" depends="javac" description="Run development mode">
+    <java failonerror="true" fork="true" classname="com.google.gwt.dev.DevMode">
+      <classpath>
+        <pathelement location="src" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+      </classpath>
+      <jvmarg value="-Xmx256M" />
+      <arg value="-startupUrl" />
+      <arg value="AGwtTemplate.html" />
+      <arg line="-war" />
+      <arg value="war" />
+      <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
+      <arg line="${gwt.args}" />
+      <arg value="agwttemplatepackage.AGwtTemplate" />
+    </java>
+  </target>
+
+  <target name="javac.tests" depends="javac" description="Compiles test code">
+    <javac srcdir="test" includes="**" encoding="utf-8" 
+      source="1.5" target="1.5" nowarn="true" destdir="war/WEB-INF/classes" debug="true" debuglevel="lines,vars,source"
+      includeantruntime="false">
+      <classpath location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
+      <classpath refid="project.class.path" />
+    </javac>
+  </target>
+
+  <target name="test.dev" depends="javac.tests" description="Run development mode tests">
+    <mkdir dir="reports/htmlunit.dev" />
+    <junit fork="yes" printsummary="yes" showoutput="true" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-standardsMode -logLevel INFO" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.dev">
+        <fileset dir="test">
+          <include name="**/*Test.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test.prod" depends="javac.tests" description="Run production mode tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="yes" showoutput="true" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-prod -standardsMode -logLevel INFO -standardsMode -out www-test -userAgents gecko1_8" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod">
+        <fileset dir="test">
+          <include name="**/*TestSuite.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test.manual" depends="javac.tests" description="RunStyle manual tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="on" showoutput="true" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-prod -standardsMode -logLevel INFO -runStyle Manual:1 -port 11111 -out www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod">
+        <fileset dir="test">
+          <include name="**/*TestSuite.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test.htmlunit" depends="javac.tests" description="RunStyle HtmlUnit tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="on" showoutput="true" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-prod -standardsMode -logLevel INFO -runStyle HtmlUnit -port 11111 -out www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod">
+        <fileset dir="test">
+          <include name="**/*TestSuite.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test.selenium" depends="javac.tests" description="RunStyle Selenium tests">
+    <mkdir dir="reports/htmlunit.prod" />
+    <junit fork="yes" printsummary="on" showoutput="true" haltonfailure="yes">
+      <jvmarg line="-Xmx256m" />
+      <sysproperty key="gwt.args" value="-standardsMode -logLevel INFO -runStyle Selenium:localhost:4444/*firefox -out www-test" />
+      <sysproperty key="java.awt.headless" value="true" />
+      <classpath>
+        <pathelement location="src" />
+        <pathelement location="test" />
+        <path refid="project.class.path" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
+        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
+      </classpath>
+      <batchtest todir="reports/htmlunit.prod">
+        <fileset dir="test">
+          <include name="**/*TestSuite.java" />
+        </fileset>
+      </batchtest>
+      <formatter type="plain" />
+      <formatter type="xml" />
+    </junit>
+  </target>
+
+  <target name="test" description="Run development and production mode tests">
+    <antcall target="test.dev" />
+    <antcall target="test.prod" />
+  </target>
+
+  <target name="hosted" depends="devmode" description="Run development mode (NOTE: the 'hosted' target is deprecated)" />
+
+  <target name="build" depends="gwtc" description="Build this project" />
+
+  <target name="war" depends="build" description="Create a war file">
+    <zip destfile="AGwtTemplate.war" basedir="war"/>
+  </target>
+
+  <target name="clean" description="Cleans this project">
+    <delete dir="war/WEB-INF/classes" failonerror="false" />
+    <delete dir="war/WEB-INF/deploy" failonerror="false" />
+    <delete dir="war/agwttemplate" failonerror="false" />
+    <delete dir="gwt-unitCache" failonerror="false" />
+    <delete dir="www-test" failonerror="false" />
+  </target>
+
+</project>
