@@ -19,11 +19,11 @@ Step 2: Run "ant rename-after-copy".
 
 Step 3: If you use Eclipse, choose "New > Project... > General > Project",
 
-        - If you created the renamed project directly in the workspace, just type in the *exact*
-          project name of the renamed project, and Eclipse will find and set up the project automatically.
+- If you created the renamed project directly in the workspace, just type in the *exact*
+  project name of the renamed project, and Eclipse will find and set up the project automatically.
           
-        - If you created the renamed project somewhere else, then 
-          uncheck "Use default location", and navigate to the renamed project.
+- If you created the renamed project somewhere else, then 
+  uncheck "Use default location", and navigate to the renamed project.
         
         
  To rename a project without copying it, you can use "ant rename-inplace" 
