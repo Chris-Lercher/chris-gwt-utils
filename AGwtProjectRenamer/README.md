@@ -30,3 +30,8 @@ Step 3 (for Eclipse users only): Choose `New > Project... > General > Project`, 
         
 To rename a project without copying it, you can use `ant rename-inplace` 
 instead of `ant rename-after-copy` (if you dare).
+
+LICENSE
+-------
+
+AGwtProjectRenamer is published under the Apache License, Version 2.0, see [NOTICE](../NOTICE).
