@@ -1,5 +1,5 @@
-DESCRIPTION:
-------------
+DESCRIPTION
+-----------
 
 An ant build file that renames GWT projects (either by copying them first, or by overwriting inplace)
  
@@ -11,10 +11,11 @@ An ant build file that renames GWT projects (either by copying them first, or by
   So please double-check, after you run the renamer!
   
   
-USAGE:
-------
+USAGE
+-----
 
 Step 1: Copy "build.properties.example" to "build.properties", and adjust.
+
 Step 2: Run "ant rename-after-copy".
 
 Step 3: If you use Eclipse, choose "New > Project... > General > Project",
@@ -24,7 +25,8 @@ Step 3: If you use Eclipse, choose "New > Project... > General > Project",
           
 - If you created the renamed project somewhere else, then 
   uncheck "Use default location", and navigate to the renamed project.
+
+### Inplace renaming
         
-        
- To rename a project without copying it, you can use "ant rename-inplace" 
- instead of "ant rename-after-copy", if you dare. 
+To rename a project without copying it, you can use "ant rename-inplace" 
+instead of "ant rename-after-copy" (if you dare).
