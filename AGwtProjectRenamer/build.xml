@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="AGwtProjectRenamer" default="rename-after-copy">
 
-
-<!--  <property name="oldProjectDir" location="../AGwtTemplate" />
-  <property name="oldModuleName" value="AGwtTemplate" />
-  <property name="oldPackageName" value="agwttemplatepackage" />
-  <property name="oldRenameToName" value="agwttemplate" />
-
-  
-  <property name="newProjectDir"   value="../Renamed" />
-  <property name="newModuleName"   value="Renamed" />
-  <property name="newPackageName"  value="renamed" />
-  <property name="newRenameToName" value="renamed" /> -->
-
   <property file="build.properties"/>
+  
   <property name="oldProjectDir" value="${oldProjectParentDir}/${oldProjectName}"/>
   <property name="newProjectDir" value="${newProjectParentDir}/${newProjectName}"/>
   
