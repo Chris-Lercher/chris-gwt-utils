@@ -14,19 +14,19 @@ An ant build file that renames GWT projects, including its references in the hos
 USAGE
 -----
 
-Step 1: Copy "build.properties.example" to "build.properties", and adjust.
+Step 1: Copy `build.properties.example` to `build.properties`, and adjust the module name, your directories, etc.
 
-Step 2: Run "ant rename-after-copy".
+Step 2: Run `ant rename-after-copy`.
 
-Step 3: If you use Eclipse, choose "New > Project... > General > Project",
+Step 3 (for Eclipse users only): Choose `New > Project... > General > Project`, then
 
-- If you created the renamed project directly in the workspace, just type in the *exact*
+- if you created the renamed project directly in your workspace directory, just type in the *exact*
   project name of the renamed project, and Eclipse will find and set up the project automatically.
           
-- If you created the renamed project somewhere else, then 
-  uncheck "Use default location", and navigate to the renamed project.
+- if you created the renamed project somewhere else, then 
+  uncheck `Use default location`, and navigate to the renamed project.
 
-### Inplace renaming
+### Inplace project renaming
         
-To rename a project without copying it, you can use "ant rename-inplace" 
-instead of "ant rename-after-copy" (if you dare).
+To rename a project without copying it, you can use `ant rename-inplace` 
+instead of `ant rename-after-copy` (if you dare).
