@@ -1,7 +1,7 @@
 DESCRIPTION
 -----------
 
-An ant build file that renames GWT projects (either by copying them first, or by overwriting inplace)
+An ant build file that renames GWT projects, including its references in the host HTML, module XML file etc.
  
 - Should work very well at least on the provided "AGwtTemplate" project (and similar template projects
   you may want to create).
