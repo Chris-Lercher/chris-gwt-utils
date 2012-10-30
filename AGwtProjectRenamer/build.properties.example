@@ -24,4 +24,7 @@ oldPackageName=agwttemplatepackage
 oldModuleName=AGwtTemplate
 oldRenameToName=agwttemplate
 
+# The suffix of the entry point class.
+# So if your moduleName is 'Abc', then the entry point class will
+# be named 'AbcEntry'.
 entryPointSuffix=Entry
