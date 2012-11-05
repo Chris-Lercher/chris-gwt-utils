@@ -34,5 +34,5 @@ instead of `ant rename-after-copy` (if you dare).
 LICENSE
 -------
 
-AGwtProjectRenamer is published under the Apache License, Version 2.0, see the parent project's 
+AGwtProjectRenamer is published under the Apache License, Version 2.0, see the parent project (chris-gwt-utils)'s 
 README and LICENSE.
