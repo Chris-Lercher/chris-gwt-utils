@@ -35,4 +35,4 @@ LICENSE
 -------
 
 AGwtProjectRenamer is published under the Apache License, Version 2.0, see the parent project's 
-[README](../README.md) and [NOTICE](../NOTICE).
+[README](../README.md) and [LICENSE](../LICENSE).
