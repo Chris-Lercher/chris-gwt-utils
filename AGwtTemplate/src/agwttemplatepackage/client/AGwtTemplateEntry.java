@@ -1,5 +1,8 @@
 package agwttemplatepackage.client;
 
+import agwttemplatepackage.shared.ExampleService;
+import agwttemplatepackage.shared.ExampleServiceAsync;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;

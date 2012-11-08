@@ -1,6 +1,6 @@
 package agwttemplatepackage.server;
 
-import agwttemplatepackage.client.ExampleService;
+import agwttemplatepackage.shared.ExampleService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 

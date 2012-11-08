@@ -1,4 +1,4 @@
-package agwttemplatepackage.client;
+package agwttemplatepackage.shared;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
