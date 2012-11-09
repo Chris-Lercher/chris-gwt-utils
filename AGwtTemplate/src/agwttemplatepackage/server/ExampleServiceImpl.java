@@ -8,7 +8,6 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class ExampleServiceImpl extends RemoteServiceServlet implements ExampleService {
 
   @Override
-  public String greetServer(final String input) throws IllegalArgumentException {
-    return "Server received " + input;
+  public void checkServer() {
   }
 }

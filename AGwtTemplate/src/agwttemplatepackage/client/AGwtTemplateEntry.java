@@ -18,10 +18,10 @@ public class AGwtTemplateEntry implements EntryPoint {
     
     RootPanel.get().add(new Label("CLIENT OK"));
     
-    exampleService.greetServer("TEMPLATE", new AsyncCallback<String>() {
+    exampleService.checkServer(new AsyncCallback<Void>() {
       
       @Override
-      public void onSuccess(final String result) {
+      public void onSuccess(final Void result) {
         RootPanel.get().add(new Label("SERVER OK"));
       }
       
