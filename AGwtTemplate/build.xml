@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="AGwtTemplate" default="build" basedir=".">
+  
+  <property file="build.properties"/>
+  
   <!-- Arguments to gwtc and devmode targets -->
   <property name="gwt.args" value="" />
-
-  <!-- Configure path to GWT SDK -->
-  <property name="gwt.sdk" location="/Users/c/prog/gwt-2.5.0.rc1" />
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes" />
@@ -38,8 +38,8 @@
       <classpath>
         <pathelement location="src" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
       </classpath>
       <!-- add jvmarg -Xss16M or similar if you see a StackOverflowError -->
       <jvmarg value="-Xmx256M" />
@@ -56,8 +56,8 @@
       <classpath>
         <pathelement location="src" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
       </classpath>
       <jvmarg value="-Xmx256M" />
       <arg value="-startupUrl" />
@@ -110,8 +110,8 @@
         <pathelement location="src" />
         <pathelement location="test" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
         <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
       </classpath>
       <batchtest todir="reports/htmlunit.dev">
@@ -134,8 +134,8 @@
         <pathelement location="src" />
         <pathelement location="test" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
         <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
       </classpath>
       <batchtest todir="reports/htmlunit.prod">
@@ -158,8 +158,8 @@
         <pathelement location="src" />
         <pathelement location="test" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
         <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
       </classpath>
       <batchtest todir="reports/htmlunit.prod">
@@ -182,8 +182,8 @@
         <pathelement location="src" />
         <pathelement location="test" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
         <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
       </classpath>
       <batchtest todir="reports/htmlunit.prod">
@@ -206,8 +206,8 @@
         <pathelement location="src" />
         <pathelement location="test" />
         <path refid="project.class.path" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA.jar" />
-        <pathelement location="/Users/c/prog/gwt-2.5.0.rc1/validation-api-1.0.0.GA-sources.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar" />
+        <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar" />
         <pathelement location="/Applications/ecl/indigo2/eclipse/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar" />
       </classpath>
       <batchtest todir="reports/htmlunit.prod">
