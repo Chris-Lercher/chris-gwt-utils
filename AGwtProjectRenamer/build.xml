@@ -20,7 +20,7 @@
     <fail if="${newProjectDir.present}" message="newProjectDir already exists"/>
     
     <copy todir="${newProjectDir}" includeemptydirs="true">
-      <fileset dir="${oldProjectDir}" includes="**"/>
+      <fileset dir="${oldProjectDir}" includes="**" defaultexcludes="false"/>
     </copy>
     
     <delete dir="${newProjectDir}/test-classes/${oldPackageName}"></delete>

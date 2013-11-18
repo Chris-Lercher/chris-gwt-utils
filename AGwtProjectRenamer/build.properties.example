@@ -10,6 +10,11 @@ oldProjectParentDir=..
 newProjectParentDir=../..
 
 oldProjectName=AGwtTemplate
+
+
+
+
+
 newProjectName=Renamed
 
 newPackageName=org.example.renamed

@@ -1,1 +1,2 @@
-gwt.sdk=/path/to/gwt-2.5.0
+gwt.sdk=/path/to/gwt-2.5.1
+junit.jar=/path/to/junit.jar
